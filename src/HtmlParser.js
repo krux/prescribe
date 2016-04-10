@@ -91,45 +91,45 @@ export default class HtmlParser {
 
 HtmlParser.supports = supports;
 
-HtmlParser.tokenToString = tok => {
-  const handler = {
-    comment: tok => {
-      return `<!--${tok.content}`;
-    },
+const tokenToStringHandlers = {
+  comment(tok) {
+    return `<!--${tok.content}`;
+  },
 
-    endTag: tok => {
-      return `</${tok.tagName}>`;
-    },
+  endTag(tok) {
+    return `</${tok.tagName}>`;
+  },
 
-    atomicTag: tok => {
-      return handler.startTag(tok) + tok.content + handler.endTag(tok);
-    },
+  atomicTag(tok) {
+    return tokenToStringHandlers.startTag(tok) + tok.content + tokenToStringHandlers.endTag(tok);
+  },
 
-    startTag: tok => {
-      let str = `<${tok.tagName}`;
-      for (let key in tok.attrs) {
-        if (tok.attrs.hasOwnProperty(key)) {
-          str += ` ${key}`;
+  startTag(tok) {
+    let str = `<${tok.tagName}`;
+    for (let key in tok.attrs) {
+      if (tok.attrs.hasOwnProperty(key)) {
+        str += ` ${key}`;
 
-          const val = tok.attrs[key];
-          if (typeof tok.booleanAttrs == 'undefined' || typeof tok.booleanAttrs[key] == 'undefined') {
-            str += `="${escapeQuotes(val)}"`;
-          }
+        const val = tok.attrs[key];
+        if (typeof tok.booleanAttrs == 'undefined' || typeof tok.booleanAttrs[key] == 'undefined') {
+          str += `="${escapeQuotes(val)}"`;
         }
       }
-
-      if (tok.rest) {
-        str += tok.rest;
-      }
-      return str + (tok.unary && !tok.html5Unary ? '/>' : '>');
-    },
-
-    chars: tok => {
-      return tok.text;
     }
-  };
 
-  return handler[tok.type](tok);
+    if (tok.rest) {
+      str += tok.rest;
+    }
+    return str + (tok.unary && !tok.html5Unary ? '/>' : '>');
+  },
+
+  chars(tok) {
+    return tok.text;
+  }
+};
+
+HtmlParser.tokenToString = tok => {
+  return tokenToStringHandlers[tok.type](tok);
 };
 
 HtmlParser.escapeAttributes = attrs => {
