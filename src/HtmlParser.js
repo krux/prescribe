@@ -1,10 +1,9 @@
-import supports from './supports';
-
 // Regular Expressions for parsing tags and attributes
 const startTag = /^<([\-A-Za-z0-9_]+)((?:\s+[\w\-]+(?:\s*=?\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/;
 const endTag = /^<\/([\-A-Za-z0-9_]+)[^>]*>/;
 const attr = /(?:([\-A-Za-z0-9_]+)\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))|(?:([\-A-Za-z0-9_]+)(\s|$)+)/g;
 const fillAttr = /^(checked|compact|declare|defer|disabled|ismap|multiple|nohref|noresize|noshade|nowrap|readonly|selected)$/i;
+import * as supports from './supports';
 
 // Order of detection matters: detection of one can only
 // succeed if detection of previous didn't
