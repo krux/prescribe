@@ -1,4 +1,3 @@
 import HtmlParser from './HtmlParser';
 
-export default HtmlParser;
-
+module.exports = HtmlParser;
