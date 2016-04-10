@@ -1,0 +1,19 @@
+sudo: false
+
+language: node_js
+
+# test on these node.js versions
+node_js:
+  - 5
+
+before_script:
+  # Run lint on every commit
+  - npm run build
+  - npm run lint
+
+notifications:
+  email:
+    recipients:
+      - seth.yates@krux.com
+    on_success: [change]
+    on_failure: [always]

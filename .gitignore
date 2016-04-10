@@ -1,0 +1,17 @@
+# Mac artifacts
+.DS_Store
+
+# Editor artifacts
+.idea/
+.*.swp
+.*.un~
+*.iml
+
+# NPM artifacts
+node_modules/
+npm-*.log
+
+# Generated files
+.idea/
+
+dist/

@@ -1,0 +1,17 @@
+{
+  "name": "prescribe",
+  "description": "Tiny, forgiving HTML parser",
+  "license": "MIT",
+  "homepage": "https://krux.github.io/prescribe/",
+  "keywords": [
+    "html",
+    "parser"
+  ],
+  "main": "dist/prescribe.js",
+  "moduleType": "es6",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/krux/prescribe.git"
+  },
+  "dependencies": {}
+}
