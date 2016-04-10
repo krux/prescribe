@@ -1,9 +1,5 @@
-// Regular Expressions for parsing tags and attributes
-const startTag = /^<([\-A-Za-z0-9_]+)((?:\s+[\w\-]+(?:\s*=?\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/;
-const endTag = /^<\/([\-A-Za-z0-9_]+)[^>]*>/;
-const attr = /(?:([\-A-Za-z0-9_]+)\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))|(?:([\-A-Za-z0-9_]+)(\s|$)+)/g;
-const fillAttr = /^(checked|compact|declare|defer|disabled|ismap|multiple|nohref|noresize|noshade|nowrap|readonly|selected)$/i;
 import * as supports from './supports';
+import * as streamReaders from './streamReaders';
 
 // Order of detection matters: detection of one can only
 // succeed if detection of previous didn't
@@ -238,7 +234,7 @@ export default class HtmlParser {
     // Enumerate detects in order
     for (let type in detect) {
       if (detect[type].test(this.stream)) {
-        const token = reader[type](this.stream);
+        const token = streamReaders[type](this.stream);
         if (token) {
           // Type
           token.type = token.type || type;
