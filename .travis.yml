@@ -11,6 +11,8 @@ before_script:
   - npm run build
   - npm run lint
 
+script: "npm run test:cross-browser"
+
 notifications:
   email:
     recipients:
