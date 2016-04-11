@@ -6,8 +6,8 @@ describe('HtmlParser', () => {
   describe('#constructor', () => {
     it('constructs', () => {
       const parser = new HtmlParser('input', {});
-      parser.should.be.ok;
-      parser.should.have.property('stream').that.is.a('string').equals('input');
+      expect(parser).to.be.ok;
+      expect(parser).to.have.property('stream', 'input');
     });
   });
 });

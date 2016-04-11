@@ -13,8 +13,8 @@ export default {
 
   frameworks: [
     'mocha',
-    'sinon-chai',
-    'chai'
+    'sinon',
+    'expect'
   ],
 
   files: [

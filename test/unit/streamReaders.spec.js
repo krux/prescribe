@@ -7,14 +7,14 @@ describe('streamReaders', () => {
   describe('#comment', () => {
     it('reads comment with no remainder', () => {
       const tok = streamReaders.comment('-->');
-      tok.should.have.property('content').that.is.a('string').empty;
-      tok.should.have.property('length').that.is.a('Number').equals(3);
+      expect(tok).to.have.property('content', '');
+      expect(tok).to.have.property('length', 3);
     });
 
     it('reads comment with remainder', () => {
       const tok = streamReaders.comment('-->foo');
-      tok.should.have.property('content').that.is.a('string').empty;
-      tok.should.have.property('length').that.is.a('Number').equals(3);
+      expect(tok).to.have.property('content', '');
+      expect(tok).to.have.property('length', 3);
     });
 
     it('returns undefined for no comment', () => {
@@ -26,8 +26,8 @@ describe('streamReaders', () => {
   describe('#endTag', () => {
     it('reads an end tag', () => {
       const tok = streamReaders.endTag('</div>');
-      tok.should.have.property('tagName').that.is.a('string').equals('div');
-      tok.should.have.property('length').that.is.a('Number').equals(6);
+      expect(tok).to.have.property('tagName', 'div');
+      expect(tok).to.have.property('length', 6);
     });
 
     it('returns undefined for not an end tag', () => {
@@ -39,23 +39,23 @@ describe('streamReaders', () => {
   describe('#chars', () => {
     it('reads until tag start', () => {
       const tok = streamReaders.chars('foo</div>');
-      tok.should.have.property('length').that.is.a('Number').equals(3);
+      expect(tok).to.have.property('length', 3);
     });
 
     it('consumes everything if not tag', () => {
       const tok = streamReaders.chars('foo');
-      tok.should.have.property('length').that.is.a('Number').equals(3);
+      expect(tok).to.have.property('length', 3);
     });
   });
 
   describe('#atomicTag', () => {
     it('reads an atomic tag', () => {
       const tok = streamReaders.atomicTag('<div class="foo">content</div>');
-      tok.should.have.property('tagName').that.is.a('string').equals('div');
-      tok.should.have.property('attrs').that.is.an('object')
-          .that.has.property('class').equals('foo');
-      tok.should.have.property('content').that.is.a('string').equals('content');
-      tok.should.have.property('length').that.is.a('Number').equals(30);
+      expect(tok).to.have.property('tagName', 'div');
+      expect(tok).to.have.property('attrs');
+      expect(tok.attrs).to.have.property('class', 'foo');
+      expect(tok).to.have.property('content', 'content');
+      expect(tok).to.have.property('length', 30);
     });
 
     it('returns undefined for a broken atomic tag', () => {
@@ -67,13 +67,14 @@ describe('streamReaders', () => {
   describe('#startTag', () => {
     it('reads a start tag', () => {
       const tok = streamReaders.startTag('<b class="foo">content</b>');
-      tok.should.have.property('tagName').that.is.a('string').equals('b');
-      tok.should.have.property('attrs').that.is.an('object')
-          .that.has.property('class').equals('foo');
-      tok.should.have.property('booleanAttrs').that.is.an('object').empty;
-      tok.should.have.property('rest').that.is.a('string').empty;
-      tok.should.have.property('unary').that.is.a('boolean').false;
-      tok.should.have.property('length').that.is.a('Number').equals(15);
+      expect(tok).to.have.property('tagName', 'b');
+      expect(tok).to.have.property('attrs');
+      expect(tok.attrs).to.have.property('class', 'foo');
+      expect(tok).to.have.property('booleanAttrs');
+      expect(tok.booleanAttrs).to.be.empty;
+      expect(tok).to.have.property('rest', '');
+      expect(tok).to.have.property('unary', false);
+      expect(tok).to.have.property('length', 15);
     });
 
     it('returns undefined for not a start tag', () => {
