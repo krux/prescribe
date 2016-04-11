@@ -56,10 +56,16 @@
       "es2015-loose"
     ],
     "plugins": [
-      "transform-es3-member-expression-literals",
-      "transform-es3-property-literals",
+      "transform-runtime",
+      [
+        "transform-es2015-classes",
+        {
+          "loose": true
+        }
+      ],
       "transform-object-assign",
-      "transform-runtime"
+      "transform-es3-property-literals",
+      "transform-es3-member-expression-literals"
     ],
     "comments": true,
     "compact": false
