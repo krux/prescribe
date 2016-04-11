@@ -1,3 +1,5 @@
+/* eslint dot-notation: [2, { "allowKeywords": true }], no-unused-expressions: 0 */
+
 import HtmlParser from '../../src/HtmlParser';
 
 describe('HtmlParser', () => {

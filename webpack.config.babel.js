@@ -20,6 +20,7 @@ export default {
   },
   output: {
     filename: 'prescribe.js',
+    library: 'Prescribe',
     libraryTarget: 'umd'
   }
 };
