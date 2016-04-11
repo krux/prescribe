@@ -127,12 +127,6 @@ To test the code locally, you can use:
 npm test
 ```
 
-Or, open the [test.html](./test/test.html) file in your web browser:
-
-```console
-open test/test.html
-```
-
 To run tests in Test-Driven-Development mode, where the test will be run after every change, use:
 
 ```console

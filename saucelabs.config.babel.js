@@ -38,18 +38,6 @@ export default {
     browserName: 'firefox',
     version: '39.0'
   },
-  win10_firefox_31: {
-    base: 'SauceLabs',
-    platform: 'Windows 10',
-    browserName: 'firefox',
-    version: '31.0'
-  },
-  win10_firefox_24: {
-    base: 'SauceLabs',
-    platform: 'Windows 10',
-    browserName: 'firefox',
-    version: '24.0'
-  },
   win10_edge: {
     base: 'SauceLabs',
     platform: 'Windows 10',
@@ -145,18 +133,6 @@ export default {
     platform: 'OS X 10.11',
     browserName: 'firefox',
     version: '39.0'
-  },
-  el_capitan_firefox_31: {
-    base: 'SauceLabs',
-    platform: 'OS X 10.11',
-    browserName: 'firefox',
-    version: '31.0'
-  },
-  el_capitan_firefox_24: {
-    base: 'SauceLabs',
-    platform: 'OS X 10.11',
-    browserName: 'firefox',
-    version: '24.0'
   },
   el_capitan_safari_9: {
     base: 'SauceLabs',

@@ -2,7 +2,7 @@
   "name": "prescribe",
   "description": "Tiny, forgiving HTML parser",
   "license": "MIT",
-  "homepage": "https://krux.github.io/prescribe/",
+  "homepage": "https://github.com/krux/prescribe/",
   "keywords": [
     "html",
     "parser"

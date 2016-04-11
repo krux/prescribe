@@ -2,7 +2,7 @@
   "name": "prescribe",
   "version": "1.0.0",
   "description": "Tiny, forgiving HTML parser",
-  "homepage": "https://krux.github.io/prescribe",
+  "homepage": "https://github.com/krux/prescribe/",
   "bugs": "https://github.com/krux/prescribe/issues",
   "license": "MIT",
   "keywords": [
@@ -34,6 +34,10 @@
     {
       "name": "Seth Yates",
       "web": "https://github.com/sethyates"
+    },
+    {
+      "name": "Ambroos Vaes",
+      "web": "https://github.com/ambroos"
     }
   ],
   "maintainers": [
