@@ -15,8 +15,8 @@ const CLOSESELF = /^(COLGROUP|DD|DT|LI|OPTIONS|P|TD|TFOOT|TH|THEAD|TR)$/i;
 /**
  * Corrects a token.
  *
- * @param {Object} tok The token to correct
- * @returns {Object} The corrected token
+ * @param {Token} tok The token to correct
+ * @returns {Token} The corrected token
  */
 function correct(tok) {
   if (tok && tok.type === 'startTag') {
@@ -30,7 +30,8 @@ function correct(tok) {
  * Peeks at the next token in the parser.
  *
  * @param {HtmlParser} parser The parser
- * @returns {Object} The next token
+ * @param {Function} readTokenImpl The underlying readToken implementation
+ * @returns {Token} The next token
  */
 function peekToken(parser, readTokenImpl) {
   const tmp = parser.stream;
@@ -43,7 +44,7 @@ function peekToken(parser, readTokenImpl) {
  * Closes the last token.
  *
  * @param {HtmlParser} parser The parser
- * @param {Array<Object>} stack The stack
+ * @param {Array<Token>} stack The stack
  */
 function closeLast(parser, stack) {
   const tok = stack.pop();
@@ -55,7 +56,7 @@ function closeLast(parser, stack) {
 /**
  * Create a new token stack.
  *
- * @returns {Array<Object>}
+ * @returns {Array<Token>}
  */
 function newStack() {
   const stack = [];
@@ -87,6 +88,8 @@ function newStack() {
  *
  * @param {HtmlParser} parser The parser
  * @param {Object} options Options for fixing
+ * @param {boolean} options.tagSoupFix True to fix tag soup scenarios
+ * @param {boolean} options.selfCloseFix True to fix self-closing tags
  * @param {Function} readTokenImpl The underlying readToken implementation
  * @returns {Function}
  */
@@ -124,15 +127,11 @@ export default function fixedReadTokenFactory(parser, options, readTokenImpl) {
         }
       } else if (options.tagSoupFix) {
         // cleanup tag soup part 2: skip this token
-        skipToken();
+        readTokenImpl();
+        prepareNextToken();
       }
     }
   };
-
-  function skipToken() {
-    readTokenImpl();
-    prepareNextToken();
-  }
 
   function prepareNextToken() {
     const tok = peekToken(parser, readTokenImpl);

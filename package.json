@@ -1,6 +1,6 @@
 {
   "name": "prescribe",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Tiny, forgiving HTML parser",
   "homepage": "https://krux.github.io/prescribe",
   "bugs": "https://github.com/krux/prescribe/issues",

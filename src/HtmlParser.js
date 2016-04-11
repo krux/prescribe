@@ -1,9 +1,16 @@
 import * as supports from './supports';
 import * as streamReaders from './streamReaders';
 import fixedReadTokenFactory from './fixedReadTokenFactory';
+import {escapeQuotes} from './utils';
 
-// Order of detection matters: detection of one can only
-// succeed if detection of previous didn't
+/**
+ * Detection regular expressions.
+ *
+ * Order of detection matters: detection of one can only
+ * succeed if detection of previous didn't
+
+ * @type {Object}
+ */
 const detect = {
   comment: /^<!--/,
   endTag: /^<\//,
@@ -12,32 +19,63 @@ const detect = {
   chars: /^[^<]/
 };
 
+/**
+ * HtmlParser provides the capability to parse HTML and return tokens
+ * representing the tags and content.
+ */
 export default class HtmlParser {
+  /**
+   * Constructor.
+   *
+   * @param {string} stream The initial parse stream contents.
+   * @param {Object} options The options
+   * @param {boolean} options.autoFix Set to true to automatically fix errors
+   */
   constructor(stream = '', options = {}) {
     this.stream = stream;
+
+    let fix = false;
+    const fixedTokenOptions = {};
 
     for (let key in supports) {
       if (supports.hasOwnProperty(key)) {
         if (options.autoFix) {
-          options[`${key}Fix`] = true; // !supports[key];
+          fixedTokenOptions[`${key}Fix`] = true; // !supports[key];
         }
-        options.fix = options.fix || options[`${key}Fix`];
+        fix = fix || fixedTokenOptions[`${key}Fix`];
       }
     }
 
-    if (options.fix) {
-      this._fixedReadToken = fixedReadTokenFactory(this, options, () => this._readTokenImpl());
+    if (fix) {
+      this._fixedReadToken = fixedReadTokenFactory(this, fixedTokenOptions,
+        () => this._readTokenImpl());
     }
   }
 
+  /**
+   * Appends the given string to the parse stream.
+   *
+   * @param {string} str The string to append
+   */
   append(str) {
     this.stream += str;
   }
 
+  /**
+   * Prepends the given string to the parse stream.
+   *
+   * @param {string} str The string to prepend
+   */
   prepend(str) {
     this.stream = str + this.stream;
   }
 
+  /**
+   * The implementation of the token reading.
+   *
+   * @private
+   * @returns {Token}
+   */
   _readTokenImpl() {
     // Enumerate detects in order
     for (let type in detect) {
@@ -45,17 +83,22 @@ export default class HtmlParser {
         if (detect[type].test(this.stream)) {
           const token = streamReaders[type](this.stream);
           if (token) {
-            token.type = token.type || type;
             token.text = this.stream.substr(0, token.length);
             this.stream = this.stream.slice(token.length);
             return token;
           }
-          return null;
         }
       }
     }
   }
 
+  /**
+   * The public token reading interface.  Delegates to the basic token reading
+   * or a version that performs fixups depending on the `autoFix` setting in
+   * options.
+   *
+   * @returns {object}
+   */
   readToken() {
     if (this._fixedReadToken) {
       return this._fixedReadToken();
@@ -64,6 +107,11 @@ export default class HtmlParser {
     }
   }
 
+  /**
+   * Read tokens and hand to the given handlers.
+   *
+   * @param {Object} handlers The handlers to use for the different tokens.
+   */
   readTokens(handlers) {
     let tok;
     while ((tok = this.readToken())) {
@@ -74,59 +122,28 @@ export default class HtmlParser {
     }
   }
 
+  /**
+   * Clears the parse stream.
+   *
+   * @returns {string} The contents of the parse stream before clearing.
+   */
   clear() {
     const rest = this.stream;
     this.stream = '';
     return rest;
   }
 
+  /**
+   * Returns the rest of the parse stream.
+   *
+   * @returns {string} The contents of the parse stream.
+   */
   rest() {
     return this.stream;
   }
 }
 
-HtmlParser.supports = supports;
-
-const tokenToStringHandlers = {
-  comment(tok) {
-    return `<!--${tok.content}`;
-  },
-
-  endTag(tok) {
-    return `</${tok.tagName}>`;
-  },
-
-  atomicTag(tok) {
-    return tokenToStringHandlers.startTag(tok) + tok.content + tokenToStringHandlers.endTag(tok);
-  },
-
-  startTag(tok) {
-    let str = `<${tok.tagName}`;
-    for (let key in tok.attrs) {
-      if (tok.attrs.hasOwnProperty(key)) {
-        str += ` ${key}`;
-
-        const val = tok.attrs[key];
-        if (typeof tok.booleanAttrs == 'undefined' || typeof tok.booleanAttrs[key] == 'undefined') {
-          str += `="${escapeQuotes(val)}"`;
-        }
-      }
-    }
-
-    if (tok.rest) {
-      str += tok.rest;
-    }
-    return str + (tok.unary && !tok.html5Unary ? '/>' : '>');
-  },
-
-  chars(tok) {
-    return tok.text;
-  }
-};
-
-HtmlParser.tokenToString = tok => {
-  return tokenToStringHandlers[tok.type](tok);
-};
+HtmlParser.tokenToString = tok => tok.toString();
 
 HtmlParser.escapeAttributes = attrs => {
   const escapedAttrs = {};
@@ -140,12 +157,10 @@ HtmlParser.escapeAttributes = attrs => {
   return escapedAttrs;
 };
 
+HtmlParser.supports = supports;
+
 for (let key in supports) {
   if (supports.hasOwnProperty(key)) {
     HtmlParser.browserHasFlaw = HtmlParser.browserHasFlaw || (!supports[key]) && key;
   }
-}
-
-function escapeQuotes(value, defaultValue = '') {
-  return value ? value.replace(/(^|[^\\])"/g, '$1\\\"') : defaultValue;
 }
