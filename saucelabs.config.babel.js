@@ -62,12 +62,12 @@ export default {
     browserName: 'firefox',
     version: '44.0'
   },
-  win7_ie_8: {
-    base: 'SauceLabs',
-    platform: 'Windows 7',
-    browserName: 'internet explorer',
-    version: '8.0'
-  },
+  //win7_ie_8: {
+    //base: 'SauceLabs',
+    //platform: 'Windows 7',
+    //browserName: 'internet explorer',
+    //version: '8.0'
+  //},
   win7_ie_9: {
     base: 'SauceLabs',
     platform: 'Windows 7',
