@@ -8,6 +8,7 @@ import del from 'del';
 import gutil from 'gulp-util';
 import rename from 'gulp-rename';
 import uglify from 'gulp-uglify';
+import filter from 'gulp-filter';
 import stripDebug from 'gulp-strip-debug';
 import webpack from 'webpack';
 import webpackStream from 'webpack-stream';
@@ -37,7 +38,7 @@ gulp.task('clean', () => {
   return del.sync([`${DEST}/**`]);
 });
 
-const LINTABLE_PATTERN = ['*.js', 'src/**/*.js', 'test/unit/*.spec.js'];
+const LINTABLE_PATTERN = ['*.js', 'src/**/*.js', 'test/**/*.js'];
 
 gulp.task('eslint', () => {
   return gulp.src(LINTABLE_PATTERN)
@@ -57,7 +58,11 @@ gulp.task('lint', ['eslint', 'jscs']);
 const basename = path.basename(webpackConfig.output.filename, path.extname(webpackConfig.output.filename));
 
 function build(config) {
+  const jsOnly = filter(['**/*.js'], {restore: true});
+  const mapOnly = filter(['**/*.map']);
+
   return () => webpackStream(config)
+    .pipe(jsOnly)
     .pipe(header(banner))
     .pipe(rename({basename: basename, extname: '.max.js'}))
     .pipe(gulp.dest(DEST))
@@ -67,6 +72,9 @@ function build(config) {
     .pipe(uglify())
     .pipe(header(banner))
     .pipe(rename({basename: basename, extname: '.min.js'}))
+    .pipe(gulp.dest(DEST))
+    .pipe(jsOnly.restore)
+    .pipe(mapOnly)
     .pipe(gulp.dest(DEST));
 }
 
@@ -125,7 +133,7 @@ gulp.task('test:cross-browser', karma('karma-sauce'));
 gulp.task('test:tdd', karma('karma', false));
 
 gulp.task('tdd', ['test:tdd'], () => {
-  gulp.watch(['*.js', 'src/**', 'test/**'], ['test:tdd']);
+  gulp.watch(['src/**', 'test/**'], ['test:tdd']);
 });
 
 gulp.task('release', ['default'], done => {
