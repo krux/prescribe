@@ -1,6 +1,3 @@
-/* globals expect */
-/* eslint dot-notation: [2, { "allowKeywords": true }], no-unused-expressions: 0 */
-
 import * as streamReaders from '../../src/streamReaders';
 
 describe('streamReaders', () => {
@@ -19,7 +16,7 @@ describe('streamReaders', () => {
 
     it('returns undefined for no comment', () => {
       const tok = streamReaders.comment('-!->');
-      expect(tok).not.to.be.ok;
+      expect(tok).not.to.be.ok();
     });
   });
 
@@ -32,7 +29,7 @@ describe('streamReaders', () => {
 
     it('returns undefined for not an end tag', () => {
       const tok = streamReaders.endTag('<div>');
-      expect(tok).not.to.be.ok;
+      expect(tok).not.to.be.ok();
     });
   });
 
@@ -60,7 +57,7 @@ describe('streamReaders', () => {
 
     it('returns undefined for a broken atomic tag', () => {
       const tok = streamReaders.atomicTag('<b class="foo">content</i>');
-      expect(tok).not.to.be.ok;
+      expect(tok).not.to.be.ok();
     });
   });
 
@@ -71,7 +68,7 @@ describe('streamReaders', () => {
       expect(tok).to.have.property('attrs');
       expect(tok.attrs).to.have.property('class', 'foo');
       expect(tok).to.have.property('booleanAttrs');
-      expect(tok.booleanAttrs).to.be.empty;
+      expect(tok.booleanAttrs).to.be.empty();
       expect(tok).to.have.property('rest', '');
       expect(tok).to.have.property('unary', false);
       expect(tok).to.have.property('length', 15);
@@ -79,7 +76,7 @@ describe('streamReaders', () => {
 
     it('returns undefined for not a start tag', () => {
       const tok = streamReaders.startTag('</foo>');
-      expect(tok).not.to.be.ok;
+      expect(tok).not.to.be.ok();
     });
   });
 

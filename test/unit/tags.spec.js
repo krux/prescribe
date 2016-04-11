@@ -1,6 +1,4 @@
-/* eslint dot-notation: [2, { "allowKeywords": true }], no-unused-expressions: 0 */
-
-import {testParse, parses} from '../helpers/testParse';
+import {testParse, parses, fixes} from '../helpers/testParse';
 
 describe('HtmlParser (tags)', () => {
   describe('#readToken', () => {
@@ -83,5 +81,29 @@ describe('HtmlParser (tags)', () => {
       expect(tok).to.not.have.property('unary');
       expect(str).to.equal('</DIV>');
     });
+
+    it('fixes missing end tag', fixes('<div><i></div>foo', s => {
+      expect(s).to.equal('<div><i></i></div>foo');
+    }));
+
+    it('fixes nested missing end tag', fixes('<div><i><div>foo</div><div><i>', s => {
+      expect(s).to.equal('<div><i><div>foo</div><div><i>');
+    }));
+
+    it('fixes missing end tag', fixes('<div><i></div><div>foo', s => {
+      expect(s).to.equal('<div><i></i></div><div>foo');
+    }));
+
+    it('fixes missing start tag', fixes('</i>foo', s => {
+      expect(s).to.equal('foo');
+    }));
+
+    it('fixes multiple missing tags', fixes('<div><i></div><div>foo<i></div>bar', s => {
+      expect(s).to.equal('<div><i></i></div><div>foo<i></i></div>bar');
+    }));
+
+    it('fixes multiple nested mismatching tags', fixes('<div><b><i></div>foo<div>bar<i></b>bla', s => {
+      expect(s).to.equal('<div><b><i></i></b></div>foo<div>bar<i></i></div>bla');
+    }));
   });
 });

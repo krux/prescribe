@@ -92,8 +92,8 @@ export class TagToken extends Token {
         str += ` ${key}`;
 
         const val = tok.attrs[key];
-        if (typeof tok.booleanAttrs == 'undefined' ||
-            typeof tok.booleanAttrs[key] == 'undefined') {
+        if (typeof tok.booleanAttrs === 'undefined' ||
+            typeof tok.booleanAttrs[key] === 'undefined') {
           str += `="${escapeQuotes(val)}"`;
         }
       }

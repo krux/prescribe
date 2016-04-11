@@ -54,7 +54,7 @@ var HtmlParser = require('prescribe');
 
 This module is meant to parse any HTML that you can throw at it and do something meaningful, and we've taken care to make sur
 that it works on every browser we can get our hands on. We expect it to work on every browser built after 2009. There are over
-20 [unit tests](./test) that run on every commit. Prescribe is thoroughly tested and known to work well in the following browsers:
+30 [unit tests](./test) that run on every commit. Prescribe is thoroughly tested and known to work well in the following browsers:
 
 * Firefox 4+
 * Chrome 10+
@@ -97,7 +97,7 @@ npm install
 To build the code, run
 
 ```console
-npm build
+npm run build
 ```
 
 ### Linting
