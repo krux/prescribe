@@ -8,7 +8,8 @@ module.exports = {
   'globals': {
     'self': false,
     'window': true,
-    'document': true
+    'document': true,
+    'expect': true
   },
   'env': {
     'browser': true,
