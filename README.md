@@ -28,14 +28,6 @@ npm install --save prescribe
 This script runs in browsers, so this assumes you're using a module bundler like [webpack](https://webpack.github.io/),
 [Browserify](http://browserify.org/), [JSPM](http://jspm.io/) or [Rollup](http://rollupjs.org/) to consume CommonJS modules.
 
-### Bower
-
-You can include `prescribe` using *bower*:
-
-```console
-bower install --save prescribe
-```
-
 ## Accessing
 
 ### ES6/ES2015
@@ -62,7 +54,7 @@ var HtmlParser = require('prescribe');
 
 This module is meant to parse any HTML that you can throw at it and do something meaningful, and we've taken care to make sur
 that it works on every browser we can get our hands on. We expect it to work on every browser built after 2009. There are over
-TODO [unit tests](./test) that run on every commit. Prescribe is thoroughly tested and known to work well in the following browsers:
+20 [unit tests](./test) that run on every commit. Prescribe is thoroughly tested and known to work well in the following browsers:
 
 * Firefox 4+
 * Chrome 10+
