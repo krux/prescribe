@@ -18,7 +18,6 @@ export function comment(stream) {
 
 export function endTag(stream) {
   const match = stream.match(regexes.endTag);
-
   if (match) {
     return {
       tagName: match[1],
@@ -50,38 +49,36 @@ export function atomicTag(stream) {
 
 export function startTag(stream) {
   const endTagIndex = stream.indexOf('>');
-  if (endTagIndex === -1) {
-    return null; // avoid the match statement if there will be no match
-  }
+  if (endTagIndex !== -1) {
+    const match = stream.match(regexes.startTag);
+    if (match) {
+      const attrs = {};
+      const booleanAttrs = {};
+      let rest = match[2];
 
-  const match = stream.match(regexes.startTag);
-  if (match) {
-    const attrs = {};
-    const booleanAttrs = {};
-    let rest = match[2];
+      match[2].replace(regexes.attr, function(match, name) {
+        if (!(arguments[2] || arguments[3] || arguments[4] || arguments[5])) {
+          attrs[name] = '';
+        } else if (arguments[5]) {
+          attrs[arguments[5]] = '';
+          booleanAttrs[arguments[5]] = true;
+        } else {
+          attrs[name] = arguments[2] || arguments[3] || arguments[4] ||
+              regexes.fillAttr.test(name) && name || '';
+        }
 
-    match[2].replace(regexes.attr, function(match, name) {
-      if (!(arguments[2] || arguments[3] || arguments[4] || arguments[5])) {
-        attrs[name] = '';
-      } else if (arguments[5]) {
-        attrs[arguments[5]] = '';
-        booleanAttrs[arguments[5]] = true;
-      } else {
-        attrs[name] = arguments[2] || arguments[3] || arguments[4] ||
-          regexes.fillAttr.test(name) && name || '';
-      }
+        rest = rest.replace(match, '');
+      });
 
-      rest = rest.replace(match, '');
-    });
-
-    return {
-      tagName: match[1],
-      attrs,
-      booleanAttrs,
-      rest: rest.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ''),
-      unary: !!match[3],
-      length: match[0].length
-    };
+      return {
+        tagName: match[1],
+        attrs,
+        booleanAttrs,
+        rest: rest.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ''),
+        unary: !!match[3],
+        length: match[0].length
+      };
+    }
   }
 }
 

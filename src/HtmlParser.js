@@ -41,21 +41,17 @@ export default class HtmlParser {
   _readTokenImpl() {
     // Enumerate detects in order
     for (let type in detect) {
-      if (detect[type].test(this.stream)) {
-        const token = streamReaders[type](this.stream);
-        if (token) {
-          // Type
-          token.type = token.type || type;
-
-          // Entire text
-          token.text = this.stream.substr(0, token.length);
-
-          // Update the stream
-          this.stream = this.stream.slice(token.length);
-
-          return token;
+      if (detect.hasOwnProperty(type)) {
+        if (detect[type].test(this.stream)) {
+          const token = streamReaders[type](this.stream);
+          if (token) {
+            token.type = token.type || type;
+            token.text = this.stream.substr(0, token.length);
+            this.stream = this.stream.slice(token.length);
+            return token;
+          }
+          return null;
         }
-        return null;
       }
     }
   }
@@ -85,7 +81,7 @@ export default class HtmlParser {
   }
 
   rest() {
-    return this.stream();
+    return this.stream;
   }
 }
 
@@ -134,13 +130,13 @@ HtmlParser.tokenToString = tok => {
 
 HtmlParser.escapeAttributes = attrs => {
   const escapedAttrs = {};
-  // escape double-quotes for writing html as a string
 
   for (let name in attrs) {
     if (attrs.hasOwnProperty(name)) {
       escapedAttrs[name] = escapeQuotes(attrs[name], null);
     }
   }
+
   return escapedAttrs;
 };
 

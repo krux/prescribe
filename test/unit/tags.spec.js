@@ -1,11 +1,10 @@
 /* eslint dot-notation: [2, { "allowKeywords": true }], no-unused-expressions: 0 */
 
-import testParse from '../helpers/testParse';
+import {testParse, parses} from '../helpers/testParse';
 
-describe('HtmlParser', () => {
+describe('HtmlParser (tags)', () => {
   describe('#readToken', () => {
-    it('parses lower case tags', () => {
-      const [tok, str] = testParse('<img src="http://localhost/">', {});
+    it('parses lower case tags', parses('<img src="http://localhost/">', (tok, str) => {
       tok.should.have.property('tagName').that.is.a('string').equals('img');
       tok.should.have.property('type').that.is.a('string').equals('startTag');
       tok.should.have.property('text').that.is.a('string').equals('<img src="http://localhost/">');
@@ -13,10 +12,9 @@ describe('HtmlParser', () => {
       tok.should.have.property('unary').that.is.a('boolean').false;
       tok.should.have.property('length').that.is.a('Number').equals(29);
       str.should.equal('<img src="http://localhost/">');
-    });
+    }));
 
-    it('parses upper case tags', () => {
-      const [tok, str] = testParse('<IMG src="http://localhost/">', {});
+    it('parses upper case tags', parses('<IMG src="http://localhost/">', (tok, str) => {
       tok.should.have.property('tagName').that.is.a('string').equals('IMG');
       tok.should.have.property('type').that.is.a('string').equals('startTag');
       tok.should.have.property('text').that.is.a('string').equals('<IMG src="http://localhost/">');
@@ -24,7 +22,7 @@ describe('HtmlParser', () => {
       tok.should.have.property('unary').that.is.a('boolean').false;
       tok.should.have.property('length').that.is.a('Number').equals(29);
       str.should.equal('<IMG src="http://localhost/">');
-    });
+    }));
 
     it('parses closed unary tags', () => {
       let [tok, str, parser] = testParse('<embed></embed>', {});

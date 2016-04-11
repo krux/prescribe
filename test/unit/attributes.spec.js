@@ -1,11 +1,10 @@
 /* eslint dot-notation: [2, { "allowKeywords": true }], no-unused-expressions: 0 */
 
-import testParse from '../helpers/testParse';
+import {parses} from '../helpers/testParse';
 
 describe('HtmlParser', () => {
   describe('#readToken', () => {
-    it('parses double quoted attributes', () => {
-      const [tok, str] = testParse('<img src="http://localhost/">', {});
+    it('parses double quoted attributes', parses('<img src="http://localhost/">', (tok, str) => {
       tok.should.have.property('tagName').that.is.a('string').equals('img');
       tok.should.have.property('rest').that.is.a('string').empty;
       tok.should.have.property('unary').that.is.a('boolean').false;
@@ -16,10 +15,9 @@ describe('HtmlParser', () => {
       tok.should.have.property('booleanAttrs').that.is.an('object').empty;
 
       str.should.equal('<img src="http://localhost/">');
-    });
+    }));
 
-    it('parses single quoted attributes', () => {
-      const [tok, str] = testParse('<img src=\'http://localhost/\'>', {});
+    it('parses single quoted attributes', parses('<img src=\'http://localhost/\'>', (tok, str) => {
       tok.should.have.property('tagName').that.is.a('string').equals('img');
       tok.should.have.property('rest').that.is.a('string').empty;
       tok.should.have.property('unary').that.is.a('boolean').false;
@@ -30,10 +28,9 @@ describe('HtmlParser', () => {
       tok.should.have.property('booleanAttrs').that.is.an('object').empty;
 
       str.should.equal('<img src="http://localhost/">');
-    });
+    }));
 
-    it('parses unquoted attributes', () => {
-      const [tok, str] = testParse('<img src=http://localhost/>', {});
+    it('parses unquoted attributes', parses('<img src=http://localhost/>', (tok, str) => {
       tok.should.have.property('tagName').that.is.a('string').equals('img');
       tok.should.have.property('rest').that.is.a('string').empty;
       tok.should.have.property('unary').that.is.a('boolean').false;
@@ -44,10 +41,9 @@ describe('HtmlParser', () => {
       tok.should.have.property('booleanAttrs').that.is.an('object').empty;
 
       str.should.equal('<img src="http://localhost/">');
-    });
+    }));
 
-    it('parses empty attributes', () => {
-      const [tok, str] = testParse('<img src="">', {});
+    it('parses empty attributes', parses('<img src="">', (tok, str) => {
       tok.should.have.property('tagName').that.is.a('string').equals('img');
       tok.should.have.property('rest').that.is.a('string').empty;
       tok.should.have.property('unary').that.is.a('boolean').false;
@@ -58,10 +54,9 @@ describe('HtmlParser', () => {
       tok.should.have.property('booleanAttrs').that.is.an('object').empty;
 
       str.should.equal('<img src="">');
-    });
+    }));
 
-    it.skip('parses missing equal attributes', () => {
-      const [tok, str] = testParse('<img src"">', {});
+    it.skip('parses missing equal attributes', parses('<img src"">', (tok, str) => {
       tok.should.have.property('tagName').that.is.a('string').equals('img');
       tok.should.have.property('rest').that.is.a('string').empty;
       tok.should.have.property('unary').that.is.a('boolean').false;
@@ -72,10 +67,9 @@ describe('HtmlParser', () => {
       tok.should.have.property('booleanAttrs').that.is.an('object').empty;
 
       str.should.equal('<img src="">');
-    });
+    }));
 
-    it('parses boolean attributes', () => {
-      const [tok, str] = testParse('<input type="checkbox" checked>', {});
+    it('parses boolean attributes', parses('<input type="checkbox" checked>', (tok, str) => {
       tok.should.have.property('tagName').that.is.a('string').equals('input');
       tok.should.have.property('rest').that.is.a('string').empty;
       tok.should.have.property('unary').that.is.a('boolean').false;
@@ -88,10 +82,9 @@ describe('HtmlParser', () => {
           .that.has.property('checked').that.is.a('boolean').equals(true);
 
       str.should.equal('<input type="checkbox" checked>');
-    });
+    }));
 
-    it('parses self closing tags', () => {
-      const [tok, str] = testParse('<div class="foo"/>', {});
+    it('parses self closing tags', parses('<div class="foo"/>', (tok, str) => {
       tok.should.have.property('tagName').that.is.a('string').equals('div');
       tok.should.have.property('rest').that.is.a('string').empty;
       tok.should.have.property('unary').that.is.a('boolean').true;
@@ -102,7 +95,7 @@ describe('HtmlParser', () => {
           .that.has.property('class').that.is.a('string').equals('foo');
 
       str.should.equal('<div class="foo"/>');
-    });
+    }));
   });
 
 });

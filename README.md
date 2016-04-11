@@ -14,7 +14,7 @@ of real-life code encountered in scenarios like ad serving.
 If you just want to use the script without installing anything:
 
 ```html
-<script src="dist/htmlparser.min.js"></script>
+<script src="dist/prescribe.min.js"></script>
 ```
 
 ### NPM
@@ -41,13 +41,13 @@ bower install --save prescribe
 ### ES6/ES2015
 
 ```javascript
-import htmlParser from 'prescribe';
+import HtmlParser from 'prescribe';
 ```
 
 ### AMD
 
 ```javascript
-define(['prescribe'], function(htmlParser) {
+define(['prescribe'], function(HtmlParser) {
 
 });
 ```
@@ -55,7 +55,7 @@ define(['prescribe'], function(htmlParser) {
 ### CommonJS
 
 ```javascript
-var htmlParser = require('prescribe');
+var HtmlParser = require('prescribe');
 ```
 
 # Browser Compatibility
