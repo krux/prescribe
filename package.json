@@ -1,6 +1,6 @@
 {
   "name": "prescribe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tiny, forgiving HTML parser",
   "homepage": "https://github.com/krux/prescribe/",
   "bugs": "https://github.com/krux/prescribe/issues",
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git://github.com/krux/prescribe.git"
   },
-  "main": "dist/htmlparser.js",
+  "main": "dist/prescribe.js",
   "author": {
     "name": "Derek Brans",
     "web": "http://github.com/dbrans"
