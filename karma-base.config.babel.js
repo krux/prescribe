@@ -1,6 +1,16 @@
 /* eslint-env node */
 import pkg from './package.json';
 import webpackConfig from './webpack.config.babel.js';
+import webpack from 'webpack';
+
+webpackConfig.plugins = [
+  new webpack.optimize.UglifyJsPlugin({
+    mangle: true,
+    compress: {
+      warnings: false
+    }
+  })
+];
 
 export default {
   basePath: '',

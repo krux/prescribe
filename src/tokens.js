@@ -1,7 +1,8 @@
 import {escapeQuotes} from './utils';
 
 /**
- * Token is a base class for all token types parsed.
+ * Token is a base class for all token types parsed.  Note we don't actually
+ * use intheritance due to IE8's non-existent ES5 support.
  */
 export class Token {
   /**
@@ -20,7 +21,7 @@ export class Token {
 /**
  * CommentToken represents comment tags.
  */
-export class CommentToken extends Token {
+export class CommentToken {
   /**
    * Constructor.
    *
@@ -28,7 +29,9 @@ export class CommentToken extends Token {
    * @param {Number} length The length of the Token text.
    */
   constructor(content, length) {
-    super('comment', length || (content ? content.length : 0));
+    this.type = 'comment';
+    this.length = length || (content ? content.length : 0);
+    this.text = '';
     this.content = content;
   }
 
@@ -40,14 +43,16 @@ export class CommentToken extends Token {
 /**
  * CharsToken represents non-tag characters.
  */
-export class CharsToken extends Token {
+export class CharsToken {
   /**
    * Constructor.
    *
    * @param {Number} length The length of the Token text.
    */
   constructor(length) {
-    super('chars', length);
+    this.type = 'chars';
+    this.length = length;
+    this.text = '';
   }
 
   toString() {
@@ -58,7 +63,7 @@ export class CharsToken extends Token {
 /**
  * TagToken is a base class for all tag-based Tokens.
  */
-export class TagToken extends Token {
+export class TagToken {
   /**
    * Constructor.
    *
@@ -70,7 +75,9 @@ export class TagToken extends Token {
    *                              is a boolean attribute
    */
   constructor(type, tagName, length, attrs, booleanAttrs) {
-    super(type, length);
+    this.type = type;
+    this.length = length;
+    this.text = '';
     this.tagName = tagName;
     this.attrs = attrs;
     this.booleanAttrs = booleanAttrs;
@@ -120,7 +127,7 @@ export class TagToken extends Token {
 /**
  * StartTagToken represents a start token.
  */
-export class StartTagToken extends TagToken {
+export class StartTagToken {
   /**
    * Constructor.
    *
@@ -133,7 +140,13 @@ export class StartTagToken extends TagToken {
    * @param {string} rest The rest of the content.
    */
   constructor(tagName, length, attrs, booleanAttrs, unary, rest) {
-    super('startTag', tagName, length, attrs, booleanAttrs);
+    this.type = 'startTag';
+    this.length = length;
+    this.text = '';
+    this.tagName = tagName;
+    this.attrs = attrs;
+    this.booleanAttrs = booleanAttrs;
+    this.html5Unary = false;
     this.unary = unary;
     this.rest = rest;
   }
@@ -146,7 +159,7 @@ export class StartTagToken extends TagToken {
 /**
  * AtomicTagToken represents an atomic tag.
  */
-export class AtomicTagToken extends TagToken {
+export class AtomicTagToken {
   /**
    * Constructor.
    *
@@ -158,7 +171,14 @@ export class AtomicTagToken extends TagToken {
    * @param {string} content The content of the tag.
    */
   constructor(tagName, length, attrs, booleanAttrs, content) {
-    super('atomicTag', tagName, length, attrs, booleanAttrs);
+    this.type = 'atomicTag';
+    this.length = length;
+    this.text = '';
+    this.tagName = tagName;
+    this.attrs = attrs;
+    this.booleanAttrs = booleanAttrs;
+    this.unary = false;
+    this.html5Unary = false;
     this.content = content;
   }
 
@@ -170,7 +190,7 @@ export class AtomicTagToken extends TagToken {
 /**
  * EndTagToken represents an end tag.
  */
-export class EndTagToken extends Token {
+export class EndTagToken {
   /**
    * Constructor.
    *
@@ -178,7 +198,9 @@ export class EndTagToken extends Token {
    * @param {Number} length The length of the tag text.
    */
   constructor(tagName, length) {
-    super('endTag', length);
+    this.type = 'endTag';
+    this.length = length;
+    this.text = '';
     this.tagName = tagName;
   }
 
