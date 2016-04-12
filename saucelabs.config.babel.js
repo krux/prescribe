@@ -34,7 +34,7 @@ export default {
   win10_ie_11: {
     base: 'SauceLabs',
     browserName: 'internet explorer',
-    platform: 'Windows 8',
+    platform: 'Windows 8.1',
     version: '11.0'
   },
   win8_ie_10: {
