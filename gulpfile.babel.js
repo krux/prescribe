@@ -130,6 +130,8 @@ gulp.task('test', karma('karma'));
 
 gulp.task('test:cross-browser', karma('karma-sauce'));
 
+gulp.task('test:ci', karma('karma-ci'));
+
 gulp.task('test:debug', karma('karma', true, {singleRun: false}));
 
 gulp.task('test:tdd', karma('karma', false));

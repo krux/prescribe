@@ -1,6 +1,10 @@
 # Overview
 
+[![Version](https://img.shields.io/npm/v/prescribe.svg)](http://npmjs.com/package/prescribe)
+[![License](https://img.shields.io/npm/l/prescribe.svg)](http://npmjs.com/package/prescribe)
 [![Build Status](https://travis-ci.org/krux/prescribe.svg?branch=master)](https://travis-ci.org/krux/prescribe)
+[![Code Climate](https://img.shields.io/codeclimate/github/krux/prescribe.svg)](https://codeclimate.com/github/krux/prescribe)
+[![Coverage](https://img.shields.io/coveralls/krux/prescribe.svg)](https://coveralls.io/github/krux/prescribe)
 
 Tiny, forgiving HTML parser in JavaScript.  This module started life as code from John Resig and
 has evolved and morphed over the years of hardening and use in Krux's [postscribe](https://github.com/krux/postscribe)

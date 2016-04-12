@@ -71,6 +71,7 @@
     "release": "gulp build && gulp release",
     "tdd": "gulp tdd",
     "test": "gulp test",
+    "test:ci": "gulp test:ci",
     "test:cross-browser": "gulp test:cross-browser",
     "test:debug": "gulp test:debug",
     "watch": "gulp watch"
@@ -111,6 +112,7 @@
     "karma-babel-preprocessor": "6.0.1",
     "karma-chrome-launcher": "0.2.3",
     "karma-coverage": "0.5.5",
+    "karma-coveralls": "1.1.2",
     "karma-expect": "1.1.2",
     "karma-firefox-launcher": "0.1.7",
     "karma-mocha": "0.2.2",

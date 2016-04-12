@@ -34,11 +34,13 @@ module.exports = (config) => {
 
     reporters: [
       {type: 'text-summary'},
-      {type: 'text'}
+      {type: 'text'},
+      {type: 'cobertura', subdir: '.', file: 'coverage.xml'},
+      {type: 'lcov'}
     ]
   };
 
-  baseConfig.reporters = ['mocha', 'coverage'];
+  baseConfig.reporters = ['mocha', 'coverage', 'coveralls'];
 
   config.set(baseConfig);
 };
