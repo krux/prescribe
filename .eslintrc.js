@@ -8,15 +8,13 @@ module.exports = {
   'globals': {
     'self': false,
     'window': true,
-    'document': true,
-    'expect': true
+    'document': true
   },
   'env': {
     'browser': true,
     'commonjs': true,
     'es6': true,
-    'node': true,
-    'mocha': true
+    'node': true
   },
   'rules': {
     'comma-dangle': [

@@ -1,5 +1,6 @@
 /* eslint-env node */
 import process from 'process';
+import childProcess from 'child_process';
 import gulp from 'gulp';
 import pkg from './package.json';
 import {Server as Karma} from 'karma';
@@ -141,15 +142,26 @@ gulp.task('tdd', ['test:tdd'], () => {
 });
 
 gulp.task('release', ['default'], done => {
-  git.exec({args: `tag ${pkg.version}`}, err => {
+  git.exec({args: `tag v${pkg.version}`}, err => {
     if (err) {
       throw err;
     }
+
     git.exec({args: 'push origin master --tags'}, err => {
       if (err) {
         throw err;
       }
-      done();
+
+      childProcess.exec('npm publish', (err, stdout, stderr) => {
+        console.log(`stdout: ${stdout}`);
+        console.log(`stderr: ${stderr}`);
+
+        if (err) {
+          throw err;
+        }
+
+        done();
+      });
     });
   });
 });
