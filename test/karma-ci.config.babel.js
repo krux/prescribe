@@ -1,10 +1,10 @@
 /* eslint-env node */
-import * as path from 'path';
+import path from 'path';
 import isparta from 'isparta';
-import pkg from './package.json';
+import pkg from '../package.json';
 import baseConfig from './karma-base.config.babel.js';
 
-module.exports = (config) => {
+module.exports = config => {
   baseConfig.webpack.module.preLoaders = [
     {
       test: /\.js$/,
@@ -20,7 +20,7 @@ module.exports = (config) => {
     },
 
     instrumenter: {
-      'src/**/*.js': 'isparta'
+      '../src/**/*.js': 'isparta'
     },
 
     instrumenterOptions: {
@@ -30,15 +30,17 @@ module.exports = (config) => {
       }
     },
 
-    dir: 'dist/test-reports/coverage/',
+    dir: '../dist/test-reports/coverage/',
 
     reporters: [
       {type: 'text-summary'},
-      {type: 'text'}
+      {type: 'text'},
+      {type: 'cobertura', subdir: '.', file: 'coverage.xml'},
+      {type: 'lcov'}
     ]
   };
 
-  baseConfig.reporters = ['mocha', 'coverage'];
+  baseConfig.reporters = ['mocha', 'coverage', 'coveralls'];
 
   config.set(baseConfig);
 };

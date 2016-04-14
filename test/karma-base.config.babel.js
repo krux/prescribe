@@ -1,6 +1,6 @@
 /* eslint-env node */
-import pkg from './package.json';
-import webpackConfig from './webpack.config.babel.js';
+import pkg from '../package.json';
+import webpackConfig from '../webpack.config.babel.js';
 import webpack from 'webpack';
 
 webpackConfig.plugins = [
@@ -28,13 +28,13 @@ export default {
   ],
 
   files: [
-    'test/**/*.spec.js'
+    '**/*.spec.js'
   ],
 
   exclude: [],
 
   preprocessors: {
-    'test/**/*.js': ['webpack']
+    '**/*.js': ['webpack']
   },
 
   babelPreprocessor: {
