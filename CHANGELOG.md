@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.0.3 - UNRELEASED
+## 1.0.3 - 2016-04-13
 ### Changed
 - chore: tidy the configuration files and testing setup
 
