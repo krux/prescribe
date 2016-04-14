@@ -1,6 +1,6 @@
 {
   "name": "prescribe",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Tiny, forgiving HTML parser",
   "homepage": "https://github.com/krux/prescribe/",
   "bugs": "https://github.com/krux/prescribe/issues",
@@ -64,17 +64,19 @@
     "compact": false
   },
   "scripts": {
-    "start": "gulp serve",
-    "clean": "gulp clean",
     "build": "gulp build",
+    "clean": "gulp clean",
+    "doc": "gulp doc",
     "lint": "gulp lint",
-    "release": "gulp build && gulp release",
+    "release": "gulp clean && gulp build && gulp release",
+    "start": "gulp serve",
     "tdd": "gulp tdd",
+    "tdd:coverage": "gulp tdd:coverage",
     "test": "gulp test",
     "test:ci": "gulp test:ci",
     "test:cross-browser": "gulp test:cross-browser",
     "test:debug": "gulp test:debug",
-    "watch": "gulp watch"
+    "test:nocoverage": "gulp test:nocoverage"
   },
   "devDependencies": {
     "babel-core": "6.7.6",
