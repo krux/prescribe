@@ -4,7 +4,7 @@ import isparta from 'isparta';
 import pkg from '../package.json';
 import baseConfig from './karma-base.config.babel.js';
 
-module.exports = (config) => {
+module.exports = config => {
   baseConfig.webpack.module.preLoaders = [
     {
       test: /\.js$/,
