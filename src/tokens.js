@@ -116,7 +116,7 @@ export class TagToken {
       str += '>';
     }
 
-    if (content) {
+    if (content !== undefined && content !== null) {
       str += `${content}</${tok.tagName}>`;
     }
 
