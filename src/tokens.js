@@ -107,7 +107,7 @@ export class TagToken {
     }
 
     if (tok.rest) {
-      str += tok.rest;
+      str += ` ${tok.rest}`;
     }
 
     if (tok.unary && !tok.html5Unary) {

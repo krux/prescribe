@@ -106,12 +106,20 @@ describe('HtmlParser (tags)', () => {
       expect(s).to.equal('<div><b><i></i></b></div>foo<div>bar<i></i></div>bla');
     }));
 
+    it('handles tag', parsesCompletely('<div id="remote">foo</div>', s => {
+      expect(s).to.equal('<div id="remote">foo</div>');
+    }));
+
+    it('handles broken tags', parsesCompletely('<img src"abc.jpg"><div>WORKS</div>', s => {
+      expect(s).to.equal('<img src"abc.jpg"><div>WORKS</div>');
+    }));
+
     it('handles atomic tags', parsesCompletely('<script src="remote/write-remote-and-inline-script.js"></script>' +
         'A<script src="remote/write-remote-and-inline-script.js">' +
         '</script>B' +
-        '<script src="remote/write-remote-and-inline-script.js"></script>', str => {
+        '<script src="remote/write-remote-and-inline-script.js"></script>', s => {
 
-      expect(str).to.equal('<script src="remote/write-remote-and-inline-script.js"></script>A<script src="remote/write-remote-and-inline-script.js"></script>B<script src="remote/write-remote-and-inline-script.js"></script>');
+      expect(s).to.equal('<script src="remote/write-remote-and-inline-script.js"></script>A<script src="remote/write-remote-and-inline-script.js"></script>B<script src="remote/write-remote-and-inline-script.js"></script>');
     }));
   });
 });

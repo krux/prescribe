@@ -1,7 +1,7 @@
 let tagSoup = false;
 let selfClose = false;
 
-const work = window.document.createElement('div');
+let work = window.document.createElement('div');
 
 try {
   const html = '<P><I></P></I>';
@@ -17,6 +17,8 @@ try {
 } catch (e) {
   selfClose = false;
 }
+
+work = null;
 
 export {
   tagSoup,
