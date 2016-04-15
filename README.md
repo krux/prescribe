@@ -6,6 +6,7 @@
 [![Code Climate](https://img.shields.io/codeclimate/github/krux/prescribe.svg)](https://codeclimate.com/github/krux/prescribe)
 [![Coverage](https://img.shields.io/coveralls/krux/prescribe.svg)](https://coveralls.io/github/krux/prescribe)
 [![Dependencies](https://img.shields.io/david/dev/krux/prescribe.svg)](./package.json)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 Tiny, forgiving HTML parser in JavaScript.  This module started life as code from John Resig and
 has evolved and morphed over the years of hardening and use in Krux's [postscribe](https://github.com/krux/postscribe)
