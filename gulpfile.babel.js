@@ -148,7 +148,7 @@ gulp.task('tdd:coverage', ['test:coverage'], () => {
   gulp.watch(['src/**', 'test/**'], ['test:coverage']);
 });
 
-gulp.task('release', ['default'], done => {
+gulp.task('release', ['build', 'doc'], done => {
   git.exec({args: `tag v${pkg.version}`}, err => {
     if (err) {
       throw err;
