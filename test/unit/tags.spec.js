@@ -114,12 +114,13 @@ describe('HtmlParser (tags)', () => {
       expect(s).to.equal('<img src"abc.jpg"><div>WORKS</div>');
     }));
 
-    it('handles atomic tags', parsesCompletely('<script src="remote/write-remote-and-inline-script.js"></script>' +
-        'A<script src="remote/write-remote-and-inline-script.js">' +
-        '</script>B' +
-        '<script src="remote/write-remote-and-inline-script.js"></script>', s => {
-
-      expect(s).to.equal('<script src="remote/write-remote-and-inline-script.js"></script>A<script src="remote/write-remote-and-inline-script.js"></script>B<script src="remote/write-remote-and-inline-script.js"></script>');
-    }));
+    it('handles atomic tags', parsesCompletely(['<script src="remote/write-remote-and-inline-script.js"></script>',
+      'A<script src="remote/write-remote-and-inline-script.js">',
+      '</script>B',
+      '<script src="remote/write-remote-and-inline-script.js"></script>'].join(''), s => {
+        expect(s).to.equal('<script src="remote/write-remote-and-inline-script.js"></script>A' +
+          '<script src="remote/write-remote-and-inline-script.js"></script>B' +
+          '<script src="remote/write-remote-and-inline-script.js"></script>');
+      }));
   });
 });
