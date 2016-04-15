@@ -62,19 +62,19 @@ describe('HtmlParser', () => {
       expect(str).to.equal('<img src="">');
     }));
 
-    it.skip('parses missing equal attributes', parses('<img src"">', (tok, str) => {
+    it('parses missing equal attributes', parses('<img src"">', (tok, str) => {
       expect(tok).to.have.property('tagName', 'img');
-      expect(tok).to.have.property('rest', '');
+      expect(tok).to.have.property('rest', 'src""');
       expect(tok).to.have.property('unary', false);
       expect(tok).to.have.property('length', 11);
       expect(tok).to.have.property('type', 'startTag');
       expect(tok).to.have.property('text', '<img src"">');
       expect(tok).to.have.property('attrs');
-      expect(tok.attrs).to.have.property('src', '');
+      expect(tok.attrs).to.be.empty();
       expect(tok).to.have.property('booleanAttrs');
       expect(tok.booleanAttrs).to.be.empty();
 
-      expect(str).to.equal('<img src="">');
+      expect(str).to.equal('<img src"">');
     }));
 
     it('parses boolean attributes', parses('<input type="checkbox" checked>', (tok, str) => {

@@ -1,4 +1,4 @@
-import {testParse, parses, fixes} from '../helpers/testParse';
+import {testParse, parses, fixes, parsesCompletely} from '../helpers/testParse';
 
 describe('HtmlParser (tags)', () => {
   describe('#readToken', () => {
@@ -23,7 +23,7 @@ describe('HtmlParser (tags)', () => {
     }));
 
     it('parses closed unary tags', () => {
-      let [tok, str, parser] = testParse('<embed></embed>', {});
+      let [tok, str, parser] = testParse('<embed></embed>');
       expect(tok).to.have.property('tagName', 'embed');
       expect(tok).to.have.property('type', 'startTag');
       expect(tok).to.have.property('text', '<embed>');
@@ -43,7 +43,7 @@ describe('HtmlParser (tags)', () => {
     });
 
     it('parses closed tags', () => {
-      let [tok, str, parser] = testParse('<div></div>', {});
+      let [tok, str, parser] = testParse('<div></div>');
       expect(tok).to.have.property('tagName', 'div');
       expect(tok).to.have.property('type', 'startTag');
       expect(tok).to.have.property('text', '<div>');
@@ -63,7 +63,7 @@ describe('HtmlParser (tags)', () => {
     });
 
     it('parses mismatched closed tags', () => {
-      let [tok, str, parser] = testParse('<div></DIV>', {});
+      let [tok, str, parser] = testParse('<div></DIV>');
       expect(tok).to.have.property('tagName', 'div');
       expect(tok).to.have.property('type', 'startTag');
       expect(tok).to.have.property('text', '<div>');
@@ -104,6 +104,22 @@ describe('HtmlParser (tags)', () => {
 
     it('fixes multiple nested mismatching tags', fixes('<div><b><i></div>foo<div>bar<i></b>bla', s => {
       expect(s).to.equal('<div><b><i></i></b></div>foo<div>bar<i></i></div>bla');
+    }));
+
+    it('handles tag', parsesCompletely('<div id="remote">foo</div>', s => {
+      expect(s).to.equal('<div id="remote">foo</div>');
+    }));
+
+    it('handles broken tags', parsesCompletely('<img src"abc.jpg"><div>WORKS</div>', s => {
+      expect(s).to.equal('<img src"abc.jpg"><div>WORKS</div>');
+    }));
+
+    it('handles atomic tags', parsesCompletely('<script src="remote/write-remote-and-inline-script.js"></script>' +
+        'A<script src="remote/write-remote-and-inline-script.js">' +
+        '</script>B' +
+        '<script src="remote/write-remote-and-inline-script.js"></script>', s => {
+
+      expect(s).to.equal('<script src="remote/write-remote-and-inline-script.js"></script>A<script src="remote/write-remote-and-inline-script.js"></script>B<script src="remote/write-remote-and-inline-script.js"></script>');
     }));
   });
 });
