@@ -114,6 +114,14 @@ describe('HtmlParser (tags)', () => {
       expect(s).to.equal('<img src"abc.jpg"><div>WORKS</div>');
     }));
 
+    it('handles script', parsesCompletely('<div>A<script type=\"text/javascript\">document.write(\"B</div>C\");\n</script>B</div>CD', s => {
+      expect(s).to.equal('<div>A<script type=\"text/javascript\">document.write(\"B</div>C\");\n</script>B</div>CD');
+    }));
+
+    it('handles two inline scripts', parsesCompletely('<script>var QWVES = 17;</script><script>document.write(QWVES);</script>', s => {
+      expect(s).to.equal('<script>var QWVES = 17;</script><script>document.write(QWVES);</script>');
+    }));
+
     it('handles atomic tags', parsesCompletely(['<script src="remote/write-remote-and-inline-script.js"></script>',
       'A<script src="remote/write-remote-and-inline-script.js">',
       '</script>B',
