@@ -39,7 +39,7 @@ export default {
 
   colors: true,
 
-  logLevel: 'info',
+  logLevel: 'debug',
 
   autoWatch: false,
 
