@@ -7,5 +7,9 @@
  * @returns {string}
  */
 export function escapeQuotes(value, defaultValue = '') {
-  return value ? value.replace(/(^|[^\\])"/g, '$1\\\"') : defaultValue;
+  // There's no lookback in JS, so /(^|[^\\])"/ only matches the first of two `"`s.
+  // Instead, just match anything before a double-quote and escape if it's not already escaped.
+  return !value ? defaultValue : value.replace(/(.*?)"/g, (_, prefix) => {
+    return /\\/.test(prefix) ? `${prefix}"` : `${prefix}\\\"`;
+  });
 }

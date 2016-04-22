@@ -108,7 +108,7 @@ describe('HtmlParser', () => {
     it('parses escaped quotes', parses("<iframe onload='var s=\"\";'></iframe>", (tok, str) => {
       expect(tok).to.have.property('tagName', 'iframe');
       expect(tok.attrs).to.have.property('onload', 'var s="";');
-      expect(str).to.equal('<iframe onload="var s=\"\";">');
+      expect(str).to.equal('<iframe onload="var s=\\"\\";"></iframe>');
     }));
   });
 
