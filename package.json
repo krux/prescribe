@@ -1,6 +1,5 @@
 {
   "name": "prescribe",
-  "version": "1.0.5",
   "description": "Tiny, forgiving HTML parser",
   "homepage": "https://github.com/krux/prescribe/",
   "bugs": "https://github.com/krux/prescribe/issues",
@@ -71,7 +70,7 @@
     "clean": "gulp clean",
     "doc": "gulp doc",
     "lint": "gulp lint",
-    "release": "gulp clean && gulp build && gulp release",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "start": "gulp serve",
     "tdd": "gulp tdd",
     "tdd:coverage": "gulp tdd:coverage",
@@ -132,6 +131,7 @@
     "mocha": "2.4.5",
     "phantomjs-prebuilt": "2.1.7",
     "process": "0.11.2",
+    "semantic-release": "^4.3.5",
     "sinon": "1.17.3",
     "watchify": "3.7.0",
     "webpack": "1.13.0",
