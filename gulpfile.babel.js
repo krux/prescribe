@@ -1,10 +1,8 @@
 /* eslint-env node */
 import process from 'process';
-import childProcess from 'child_process';
 import gulp from 'gulp';
 import pkg from './package.json';
 import {Server as Karma} from 'karma';
-import git from 'gulp-git';
 import del from 'del';
 import gutil from 'gulp-util';
 import rename from 'gulp-rename';
