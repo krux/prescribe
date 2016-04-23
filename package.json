@@ -17,28 +17,6 @@
     "name": "Derek Brans",
     "web": "http://github.com/dbrans"
   },
-  "contributors": [
-    {
-      "name": "Derek Brans",
-      "web": "https://github.com/dbrans"
-    },
-    {
-      "name": "Nick Sullivan",
-      "web": "http://creationeer.me"
-    },
-    {
-      "name": "Joshua Newman",
-      "web": "https://github.com/jnewman"
-    },
-    {
-      "name": "Seth Yates",
-      "web": "https://github.com/sethyates"
-    },
-    {
-      "name": "Ambroos Vaes",
-      "web": "https://github.com/ambroos"
-    }
-  ],
   "maintainers": [
     {
       "name": "Joshua Newman",
