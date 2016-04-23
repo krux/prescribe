@@ -6,6 +6,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - fix: we were escaping `""` to `\""`
 
+## 1.0.5 - 2016-04-15
+### Changed
+- chore(build): change release task to avoid race condition with clean
+
+## 1.0.4 - 2016-04-14
+### Changed
+- chore(package): update jscs to version 3.0.1
+
 ## 1.0.3 - 2016-04-13
 ### Changed
 - chore: tidy the configuration files and testing setup
