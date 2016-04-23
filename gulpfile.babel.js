@@ -1,10 +1,8 @@
 /* eslint-env node */
 import process from 'process';
-import childProcess from 'child_process';
 import gulp from 'gulp';
 import pkg from './package.json';
 import {Server as Karma} from 'karma';
-import git from 'gulp-git';
 import del from 'del';
 import gutil from 'gulp-util';
 import rename from 'gulp-rename';
@@ -147,29 +145,3 @@ gulp.task('tdd', ['test:nocoverage'], () => {
 gulp.task('tdd:coverage', ['test:coverage'], () => {
   gulp.watch(['src/**', 'test/**'], ['test:coverage']);
 });
-
-gulp.task('release', ['build', 'doc'], done => {
-  git.exec({args: `tag v${pkg.version}`}, err => {
-    if (err) {
-      throw err;
-    }
-
-    git.exec({args: 'push origin master --tags'}, err => {
-      if (err) {
-        throw err;
-      }
-
-      childProcess.exec('npm publish', (err, stdout, stderr) => {
-        gutil.log('[release]', `stdout: ${stdout}`);
-        gutil.log('[release]', `stderr: ${stderr}`);
-
-        if (err) {
-          throw err;
-        }
-
-        done();
-      });
-    });
-  });
-});
-
