@@ -1,5 +1,6 @@
 {
   "preset": "google",
   "esnext": true,
-  "maximumLineLength": null
+  "maximumLineLength": null,
+  "validateQuoteMarks": { "mark": "'", "escape": true }
 }
