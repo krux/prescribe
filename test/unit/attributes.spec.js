@@ -1,4 +1,5 @@
 import {parses} from '../helpers/testParse';
+import {peeks} from '../helpers/testPeek';
 
 describe('HtmlParser', () => {
   describe('#readToken', () => {
@@ -112,4 +113,17 @@ describe('HtmlParser', () => {
     }));
   });
 
+  describe('#peek', () => {
+    const TAG = '<img/>';
+
+    it('does not mutate the stream', peeks(TAG, (token, parser) => {
+      expect(parser.rest()).to.equal(token.toString());
+    }));
+    it('shows the next token', peeks(TAG, (token) => {
+      expect(token.toString()).to.equal(TAG);
+    }));
+    it('returns undefined when there are no more tokens', peeks('', (token) => {
+      expect(token).to.be(undefined);
+    }));
+  });
 });
