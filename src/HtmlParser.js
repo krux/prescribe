@@ -47,8 +47,8 @@ export default class HtmlParser {
     }
 
     if (fix) {
-      this._fixedReadToken = fixedReadTokenFactory(this, fixedTokenOptions,
-        () => this._readTokenImpl());
+      this._fixedReadToken = fixedReadTokenFactory(this, fixedTokenOptions, () => this._readTokenImpl());
+      this._fixedPeekToken = fixedReadTokenFactory(this, fixedTokenOptions, () => this._peekTokenImpl());
     }
   }
 
@@ -74,22 +74,36 @@ export default class HtmlParser {
    * The implementation of the token reading.
    *
    * @private
-   * @returns {Token}
+   * @returns {?Token}
    */
   _readTokenImpl() {
-    // Enumerate detects in order
+    const token = this._peekTokenImpl();
+    if (token) {
+      this.stream = this.stream.slice(token.length);
+      return token;
+    }
+  }
+
+  /**
+   *
+   * @returns {?Token}
+   */
+  _peekTokenImpl() {
     for (let type in detect) {
       if (detect.hasOwnProperty(type)) {
         if (detect[type].test(this.stream)) {
           const token = streamReaders[type](this.stream);
           if (token) {
             token.text = this.stream.substr(0, token.length);
-            this.stream = this.stream.slice(token.length);
             return token;
           }
         }
       }
     }
+  }
+
+  peekToken() {
+    return this._fixedReadToken ? this._fixedReadToken() : this._peekTokenImpl();
   }
 
   /**
