@@ -22,7 +22,12 @@ script:
   fi
 
 after_success:
-  - npm run semantic-release
+- |
+  npm run semantic-release
+  if [ "${TRAVIS_PULL_REQUEST}" != "true" ]; then
+    npm install codeclimate-test-reporter
+    ./node_modules/.bin/codeclimate-test-reporter < build/test-reports/coverage/*/lcov.info
+  fi
 
 branches:
   except:
