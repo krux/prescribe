@@ -8,6 +8,7 @@
 [![Dependencies](https://img.shields.io/david/dev/krux/prescribe.svg)](./package.json)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Gitter](https://badges.gitter.im/krux/postscribe.svg)](https://gitter.im/krux/postscribe)
 
 Tiny, forgiving HTML parser in JavaScript.  This module started life as code from John Resig and
 has evolved and morphed over the years of hardening and use in Krux's [postscribe](https://github.com/krux/postscribe)
