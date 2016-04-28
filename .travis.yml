@@ -6,9 +6,6 @@ cache:
   directories:
     - node_modules
 
-notifications:
-  email: false
-
 node_js:
   - 5
 
@@ -30,3 +27,12 @@ after_success:
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
+
+notifications:
+  email: false
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/c5ef8c460e0c28b4817e
+    on_success: change
+    on_failure: always
+    on_start: never
