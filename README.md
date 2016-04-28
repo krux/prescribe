@@ -1,5 +1,7 @@
 # Overview
 
+[![Join the chat at https://gitter.im/krux/prescribe](https://badges.gitter.im/krux/prescribe.svg)](https://gitter.im/krux/prescribe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Version](https://img.shields.io/npm/v/prescribe.svg)](http://npmjs.com/package/prescribe)
 [![License](https://img.shields.io/npm/l/prescribe.svg)](http://npmjs.com/package/prescribe)
 [![Build Status](https://travis-ci.org/krux/prescribe.svg?branch=master)](https://travis-ci.org/krux/prescribe)
