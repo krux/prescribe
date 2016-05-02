@@ -51,7 +51,7 @@ export default class HtmlParser {
       this._peekToken = fixedReadTokenFactory(this, fixedTokenOptions, () => this._peekTokenImpl());
     } else {
       this._readToken = this._readTokenImpl;
-      this._peekToken = this._peekTokenImpl
+      this._peekToken = this._peekTokenImpl;
     }
   }
 
