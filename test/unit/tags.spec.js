@@ -2,6 +2,38 @@ import {testParse, parses, fixes, parsesCompletely} from '../helpers/testParse';
 
 describe('HtmlParser (tags)', () => {
   describe('#readToken', () => {
+    it('parses closed div tag completely', parsesCompletely('<div id="foo">hi there</div>', s => {
+      expect(s).to.equal('<div id="foo">hi there</div>');
+    }));
+
+    it('parses closed script tag completely', parsesCompletely('<script id="foo" type="text/javascript">// hi there</script>', s => {
+      expect(s).to.equal('<script id="foo" type="text/javascript">// hi there</script>');
+    }));
+
+    it('parses closed style tag completely', parsesCompletely('<style id="foo" type="text/css">/* hi there */</style>', s => {
+      expect(s).to.equal('<style id="foo" type="text/css">/* hi there */</style>');
+    }));
+
+    it('parses open div tag completely', parsesCompletely('<div id="foo">hi there', s => {
+      expect(s).to.equal('<div id="foo">hi there');
+    }));
+
+    it('parses open script tag completely', parsesCompletely('<script id="foo" text="text/javascript">// hi there', s => {
+      expect(s).to.equal('');
+    }));
+
+    it('parses open style tag completely', parsesCompletely('<style id="foo" text="text/css">/* hi there */', s => {
+      expect(s).to.equal('');
+    }));
+
+    it('parses open SCRIPT tag completely', parsesCompletely('<SCRIPT id="foo" text="text/javascript">// hi there', s => {
+      expect(s).to.equal('');
+    }));
+
+    it('parses open STYLE tag completely', parsesCompletely('<STYLE id="foo" text="text/css">/* hi there */', s => {
+      expect(s).to.equal('');
+    }));
+
     it('parses lower case tags', parses('<img src="http://localhost/">', (tok, str) => {
       expect(tok).to.have.property('tagName', 'img');
       expect(tok).to.have.property('type', 'startTag');

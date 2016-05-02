@@ -1,5 +1,5 @@
 require('babel-register');
-require('process');
+var process = require('process');
 
 process.chdir('..');
 
