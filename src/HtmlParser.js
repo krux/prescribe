@@ -99,7 +99,7 @@ export default class HtmlParser {
           const token = streamReaders[type](this.stream);
 
           if (token) {
-            if (token.type == 'startTag' &&
+            if (token.type === 'startTag' &&
                 (/script|style/i).test(token.tagName)) {
               return null;
             } else {
