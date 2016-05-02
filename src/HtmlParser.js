@@ -47,8 +47,11 @@ export default class HtmlParser {
     }
 
     if (fix) {
-      this._fixedReadToken = fixedReadTokenFactory(this, fixedTokenOptions, () => this._readTokenImpl());
-      this._fixedPeekToken = fixedReadTokenFactory(this, fixedTokenOptions, () => this._peekTokenImpl());
+      this._readToken = fixedReadTokenFactory(this, fixedTokenOptions, () => this._readTokenImpl());
+      this._peekToken = fixedReadTokenFactory(this, fixedTokenOptions, () => this._peekTokenImpl());
+    } else {
+      this._readToken = this._readTokenImpl;
+      this._peekToken = this._peekTokenImpl
     }
   }
 
@@ -85,6 +88,7 @@ export default class HtmlParser {
   }
 
   /**
+   * The implementation of token peeking.
    *
    * @returns {?Token}
    */
@@ -93,17 +97,30 @@ export default class HtmlParser {
       if (detect.hasOwnProperty(type)) {
         if (detect[type].test(this.stream)) {
           const token = streamReaders[type](this.stream);
+
           if (token) {
-            token.text = this.stream.substr(0, token.length);
-            return token;
+            if (token.type == 'startTag' &&
+                (/script|style/i).test(token.tagName)) {
+              return null;
+            } else {
+              token.text = this.stream.substr(0, token.length);
+              return token;
+            }
           }
         }
       }
     }
   }
 
+  /**
+   * The public token peeking interface.  Delegates to the basic token peeking
+   * or a version that performs fixups depending on the `autoFix` setting in
+   * options.
+   *
+   * @returns {object}
+   */
   peekToken() {
-    return this._fixedReadToken ? this._fixedReadToken() : this._peekTokenImpl();
+    return this._peekToken();
   }
 
   /**
@@ -114,11 +131,7 @@ export default class HtmlParser {
    * @returns {object}
    */
   readToken() {
-    if (this._fixedReadToken) {
-      return this._fixedReadToken();
-    } else {
-      return this._readTokenImpl();
-    }
+    return this._readToken();
   }
 
   /**
