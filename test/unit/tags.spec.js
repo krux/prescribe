@@ -34,6 +34,10 @@ describe('HtmlParser (tags)', () => {
       expect(s).to.equal('');
     }));
 
+    it('parses closed FB tags completely', parsesCompletely('<fb:ad placementid="1234" format="320x50" testmode="true">FB</fb:ad>', s => {
+      expect(s).to.equal('<fb:ad placementid="1234" format="320x50" testmode="true">FB</fb:ad>');
+    }));
+
     it('parses lower case tags', parses('<img src="http://localhost/">', (tok, str) => {
       expect(tok).to.have.property('tagName', 'img');
       expect(tok).to.have.property('type', 'startTag');
