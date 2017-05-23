@@ -1,5 +1,7 @@
 # Overview
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/krux/prescribe.svg)](https://greenkeeper.io/)
+
 [![Version](https://img.shields.io/npm/v/prescribe.svg)](http://npmjs.com/package/prescribe)
 [![License](https://img.shields.io/npm/l/prescribe.svg)](http://npmjs.com/package/prescribe)
 [![Build Status](https://travis-ci.org/krux/prescribe.svg?branch=master)](https://travis-ci.org/krux/prescribe)
