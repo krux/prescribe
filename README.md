@@ -145,7 +145,7 @@ Please either add a failing [unit test](./test/unit) or include a [jsfiddle](htt
 
 # License
 
-We aim for you to use this inside your application, so we picked the least restrictive license we could find.
+We aim for you to use this inside your application, so we picked the least restrictive license we could find: the MIT license.
 
 See [LICENSE](LICENSE).
 
