@@ -20,9 +20,12 @@ const REGEXES = {
  * @returns {CommentToken}
  */
 export function comment(stream) {
-  const index = stream.indexOf('-->');
+  const endNeedle = '-->';
+  const index = stream.indexOf(endNeedle);
+  const startIndex = String('<!--').length;
+  const endIndex = index + endNeedle.length;
   if (index >= 0) {
-    return new CommentToken(stream.substr(4, index - 1), index + 3);
+    return new CommentToken(stream.substring(startIndex, endIndex), endIndex);
   }
 }
 

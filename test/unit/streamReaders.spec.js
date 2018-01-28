@@ -60,6 +60,13 @@ describe('streamReaders', () => {
       expect(tok).not.to.be.ok();
     });
   });
+  
+  describe('comments on ScriptTag #atomicTag', () => {
+    it('keep comments on a ScriptTag', () => {
+      const tok = streamReaders.atomicTag('<script>/* lala */</script>');
+      expect(tok).to.have.property('content', '/* lala */');
+    });
+  });
 
   describe('#startTag', () => {
     it('reads a start tag', () => {
