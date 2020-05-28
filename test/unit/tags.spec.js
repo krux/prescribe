@@ -118,6 +118,10 @@ describe('HtmlParser (tags)', () => {
       expect(str).to.equal('</DIV>');
     });
 
+    it('recovers from broken html', fixes('<div> hello <br \\="" /> </div><h2>Example</h2>', s => {
+      expect(s).to.equal('<div> hello br \\="" /> </div><h2>Example</h2>');
+    }));
+
     it('fixes missing end tag', fixes('<div><i></div>foo', s => {
       expect(s).to.equal('<div><i></i></div>foo');
     }));

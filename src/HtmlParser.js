@@ -11,6 +11,8 @@ import {escapeQuotes} from './utils';
 
  * @type {Object}
  */
+const ignoredInvalidTags = /^<\s*(?:script|style)/i;
+
 const detect = {
   comment: /^<!--/,
   endTag: /^<\//,
@@ -30,12 +32,14 @@ export default class HtmlParser {
    * @param {string} stream The initial parse stream contents.
    * @param {Object} options The options
    * @param {boolean} options.autoFix Set to true to automatically fix errors
+   * @param {boolean} options.allowInvalidHTML Continue parsing invalid HTML, dropping minimal characters
    */
   constructor(stream = '', options = {}) {
     this.stream = stream;
 
     let fix = false;
     const fixedTokenOptions = {};
+    this.allowInvalidHTML = options.allowInvalidHTML;
 
     for (let key in supports) {
       if (supports.hasOwnProperty(key)) {
@@ -48,10 +52,10 @@ export default class HtmlParser {
 
     if (fix) {
       this._readToken = fixedReadTokenFactory(this, fixedTokenOptions, () => this._readTokenImpl());
-      this._peekToken = fixedReadTokenFactory(this, fixedTokenOptions, () => this._peekTokenImpl());
+      this._peekToken = fixedReadTokenFactory(this, fixedTokenOptions, () => this._peekTokenImpl(this.allowInvalidHTML));
     } else {
       this._readToken = this._readTokenImpl;
-      this._peekToken = this._peekTokenImpl;
+      this._peekToken = () => this._peekTokenImpl(this.allowInvalidHTML);
     }
   }
 
@@ -80,11 +84,23 @@ export default class HtmlParser {
    * @returns {?Token}
    */
   _readTokenImpl() {
-    const token = this._peekTokenImpl();
+    const token = this._peekTokenImpl(this.allowInvalidHTML);
     if (token) {
       this.stream = this.stream.slice(token.length);
       return token;
     }
+  }
+
+  _consumeInvalidHtml() {
+    this.stream = this.stream.slice(1);
+
+    let token = this._peekTokenImpl(false);
+    while (this.stream.length > 0 && token == null) {
+      this.stream = this.stream.slice(1);
+      token = this._peekTokenImpl(false);
+    }
+
+    return token;
   }
 
   /**
@@ -92,7 +108,7 @@ export default class HtmlParser {
    *
    * @returns {?Token}
    */
-  _peekTokenImpl() {
+  _peekTokenImpl(allowInvalidHTML) {
     for (let type in detect) {
       if (detect.hasOwnProperty(type)) {
         if (detect[type].test(this.stream)) {
@@ -106,6 +122,8 @@ export default class HtmlParser {
               token.text = this.stream.substr(0, token.length);
               return token;
             }
+          } else if (allowInvalidHTML && this.stream.length && token == null && !(ignoredInvalidTags.test(this.stream))) {
+            return this._consumeInvalidHtml();
           }
         }
       }

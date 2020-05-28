@@ -54,7 +54,7 @@ export function parsesCompletely(s, options, theTest) {
 
 export function fixes(s, theTest) {
   return () => {
-    const parser = typeof s === 'string' ? new HtmlParser(s, {autoFix: true}) : s;
+    const parser = typeof s === 'string' ? new HtmlParser(s, {autoFix: true, allowInvalidHTML: true}) : s;
     let tok = parser.readToken();
     let str = '';
     while (tok) {
