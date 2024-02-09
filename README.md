@@ -1,3 +1,5 @@
+# THIS REPOSITORY IS NO LONGER MAINTAINED AND IS ARCHIVED.
+
 # Overview
 
 [![Version](https://img.shields.io/npm/v/prescribe.svg)](http://npmjs.com/package/prescribe)
